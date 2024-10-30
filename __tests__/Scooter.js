@@ -2,28 +2,37 @@ const { describe, expect, it } = require("@jest/globals");
 const Scooter = require("../classes/Scooter.js");
 
 describe("scooter.rent(user)", () => {
-  it.skip("checks a scooter out to a user", () => {
-    // Arrange
-    // Act
-    // Assert
+  const scooter = new Scooter('station1');
+
+  it("checks a scooter out to a user", () => {
+    scooter.charge = 30;
+    scooter.isBroken = false;
+    expect(scooter.rent('mel')).toEqual('mel');
   });
 
-  it.skip("throws an error if battery dead or scooter broken", () => {
-    // Arrange
-    // Act
-    // Assert
+  it("throws an error if battery dead or scooter broken", () => {
+    scooter.charge = 10;
+    scooter.isBroken = false;
+    expect(() => scooter.rent('mel')).toThrow('scooter needs to charge');
+    
+    scooter.charge = 30;
+    scooter.isBroken = true;
+    expect(() => scooter.rent('mel')).toThrow('scooter needs repair');
   });
 });
 
 describe("scooter.dock(station)", () => {
-  it.skip("returns a scooter to a station", () => {
-    // Arrange
-    // Act
-    // Assert
+  it("returns a scooter to a station", () => {
+    const scooter = new Scooter('station1');
+    expect(scooter.dock('station2')).toBeUndefined(); // dock method returns nothing
+    expect(scooter.station).toBe('station2');
+    expect(scooter.user).toBeNull();
   });
 });
 
-describe("scooter.charge()", () => {
+
+
+/*describe("scooter.charge()", () => {
   it.skip("charges a scooter", () => {
     // Arrange
     // Act
@@ -37,4 +46,4 @@ describe("scooter.repair()", () => {
     // Act
     // Assert
   });
-});
+});*/
